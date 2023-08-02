@@ -1,0 +1,77 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+}
+body {
+  height: 100vh;
+  background-color: rgb(135, 181, 221);
+}
+.wrapper {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+.container {
+  width: 70vmin;
+  height: 70vmin;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vmin;
+}
+.button-option {
+  background-color: #ffffff;
+  height: 22vmin;
+  width: 22vmin;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 12vmin;
+  color: rgb(36, 114, 182);
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  text-align: center;
+}
+#restart {
+  margin-top: 1.5em;
+  font-size: 1.5em;
+  padding: 1em;
+  border-radius: 8px;
+  background-color: black;
+  color: #ffffff;
+  border: none;
+  position: relative;
+  margin: 1.5em auto;
+  display: block;
+}
+.popup {
+  background-color: bisque;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  z-index: 2;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1em;
+  font-size: 12vmin;
+  align-items: center;
+}
+#new-game {
+  font-size: 0.6em;
+  padding: 0.5em 1em;
+  background-color: #0a0027;
+  color: #ffffff;
+  border-radius: 0.2em;
+  border: none;
+}
+#message {
+  color: green;
+  text-align: center;
+  font-size: 1em;
+}
+.popup.hide {
+  display: none;
+}
