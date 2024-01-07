@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currency Converter</title>
+  </head>
+  <body>
+    <form action="" id="form">
+      <input
+        type="number"
+        name=""
+        id="enter-amount"
+        placeholder="Enter your amount"
+      />
+      <button type="submit">Submit</button>
+    </form>
+    <div class="result">Result:</div>
+    <select name="from" id="from">
+      <option value="">Select Currency</option>
+    </select>
+
+    <select name="to" id="to">
+      <option value="">Select Currency</option>
+    </select>
+  </body>
+  <script>
+    const fromSelect = document.getElementById("from");
+    const toSelect = document.getElementById("to");
+    const amount = document.getElementById("enter-amount");
+    const submit = document.getElementById("form");
+    const result = document.querySelector(".result");
+
+    const addCurrency = (selectElement, code) => {
+      const objPrice = Object.entries(code);
+      for (let i = 0; i < objPrice.length; i++) {
+        const option = document.createElement("option");
+        option.value = objPrice[i][1].value;
+        option.innerText = objPrice[i][0];
+        selectElement.append(option);
+      }
+    };
+    const fetchCurrency = async () => {
+      try {
+        const config = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(
+          "https://api.currencyapi.com/v3/latest?apikey=cur_live_T4cxgoJ8M71SfGTF5JfzLth5FNsKA9xCPPGvsq6y&currencies=EUR%2CUSD%2CCAD%2CINR%2CGBP%2CJPY%2CKRW",
+          config
+        );
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchCurrency()
+      .then(({ data }) => {
+        addCurrency(fromSelect, data);
+        addCurrency(toSelect, data);
+      })
+      .catch((err) => console.log(err.message));
+
+    submit.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const val = amount.value;
+      const fromValue = fromSelect.value;
+      const toValue = toSelect.value;
+      if (!val || !fromValue || !toValue) {
+        alert("Please fill all fields!");
+      }
+      convertVal(val, fromValue, toValue);
+    });
+
+    function convertVal(val, fromValue, toValue) {
+      const ans = val * (toValue / fromValue);
+      result.textContent = `Result : ${ans}`;
+    }
+  </script>
+</html>

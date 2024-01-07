@@ -3,50 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="./app.js" defer></script>
-    <title>Document</title>
+    <title>Calculator</title>
+
+    <style>
+      body {
+        width: 50%;
+        margin: auto;
+      }
+      .numbers {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        width: 40%;
+        background-color: rgba(150, 121, 86, 0.522);
+      }
+      div button {
+        width: 50px;
+        height: 50px;
+        background-color: black;
+        color: white;
+        padding: 5px;
+      }
+      #ans {
+        width: 40%;
+        border: 1px solid red;
+        padding: 5px;
+        height: 50px;
+        z-index: 1;
+        color: rgb(34, 108, 59);
+        background-color: rgba(150, 121, 86, 0.522);
+      }
+    </style>
   </head>
   <body>
-    <div class="mainContainer">
-      <h1
-        style="
-          background-color: antiquewhite;
-          width: 100%;
-          text-align: center;
-          padding: 1rem;
-        "
-      >
-        Calculator
-      </h1>
-      <div class="screen">
-        <div class="space"></div>
-        <div class="ans" id="ans"></div>
-      </div>
-      <div class="operation">
-        <div class="numbers">
-          <button id="one" value="1">1</button>
-          <button id="two" value="2">2</button>
-          <button id="three" value="3">3</button>
-          <button id="four" value="4">4</button>
-          <button id="five" value="5">5</button>
-          <button id="six" value="6">6</button>
-          <button id="seven" value="7">7</button>
-          <button id="eight" value="8">8</button>
-          <button id="nine" value="9">9</button>
-          <button id="zero" value="0">0</button>
-          <button value=".">.</button>
-        </div>
-        <div class="arithmatic">
-          <button value="+">+</button>
-          <button value="-">-</button>
-          <button value="*">x</button>
-          <button value="/">÷</button>
-          <button value="=">=</button>
-          <button id="del">DEL</button>
-          <button id="clr">CLR</button>
-        </div>
-      </div>
+    <h1>CALCULATOR</h1>
+    <div id="ans"></div>
+
+    <div class="numbers">
+      <button value="1">1</button>
+      <button value="2">2</button>
+      <button value="3">3</button>
+      <button value="4">4</button>
+      <button value="5">5</button>
+      <button value="6">6</button>
+      <button value="7">7</button>
+      <button value="8">8</button>
+      <button value="9">9</button>
+      <button value="0">0</button>
+      <button value="+">+</button>
+      <button value="-">-</button>
+      <button value="*">*</button>
+      <button value="/">/</button>
+      <button value="=">=</button>
     </div>
+
+    <script>
+      const numbers = document.querySelector(".numbers");
+      const showAns = document.getElementById("ans");
+      let calExpression = "";
+      numbers.addEventListener("click", (e) => {
+        let btnValue = e.target.value;
+        if (btnValue === "=") {
+          if (!calExpression) {
+            return;
+          }
+          showAns.innerText = eval(calExpression);
+        } else {
+          calExpression += btnValue;
+          showAns.innerText = calExpression;
+        }
+      });
+    </script>
   </body>
 </html>

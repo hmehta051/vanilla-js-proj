@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0%;
+      }
+      body {
+        width: 70%;
+        margin: 50px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 30px;
+      }
+      .mapTodo {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+
+        gap: 1rem;
+      }
+      .oneTodo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .btn {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      button {
+        border: none;
+        color: white;
+        background-color: black;
+        padding: 8px;
+      }
+      button:hover {
+        opacity: 0.7;
+      }
+      input {
+        height: 24px;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Todo App</h1>
+
+    <form action="" id="todoForm">
+      <label for="todo">Add Todo:</label>
+      <input type="text" id="todo" required />
+      <button type="submit">Submit</button>
+    </form>
+
+    <div class="mapTodo">
+      <!-- <div class="oneTodo">
+        <div>Todo NAME</div>
+        <div class="btn">
+          <button>done</button>
+          <button>Edit</button>
+          <button>Delete</button>
+        </div>
+      </div> -->
+    </div>
+  </body>
+  <script>
+    const form = document.getElementById("todoForm");
+    const inputText = document.getElementById("todo"); // Changed this line to get the input element correctly
+    const mapTodo = document.querySelector(".mapTodo");
+
+    const todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+    form.addEventListener("submit", addTodo);
+
+    function addTodo(e) {
+      e.preventDefault();
+      const inputVal = inputText.value;
+      const addTodos = {
+        name: inputVal,
+        done: false,
+        id: Date.now(),
+      };
+      // Add todo
+      todos.push(addTodos);
+
+      renderTodos();
+      inputText.value = "";
+      saveToLocalStorage();
+    }
+
+    function renderTodos() {
+      mapTodo.innerHTML = "";
+      todos.forEach((todo, index) => {
+        let oneTodo = document.createElement("div");
+        oneTodo.classList.add("oneTodo");
+        oneTodo.innerHTML = `<div>${todo.name}</div>
+        <div class="btn">
+          <button onClick="done(${index})">${
+          todo.done === true ? "True" : "False"
+        }</button>
+          <button onClick="edit(${index})">Edit</button>
+          <button onClick="deleteTodo(${index})">Delete</button>
+        </div>`;
+        mapTodo.append(oneTodo);
+      });
+    }
+
+    function done(index) {
+      todos[index].done = !todos[index].done;
+      renderTodos();
+      saveToLocalStorage();
+    }
+
+    function deleteTodo(index) {
+      todos.splice(index, 1);
+      renderTodos();
+      saveToLocalStorage();
+    }
+
+    function edit(index) {
+      const updateTodo = prompt("Enter your todo:");
+      if (updateTodo !== null && updateTodo.trim() !== "") {
+        console.log(updateTodo);
+        todos[index].name = updateTodo;
+        renderTodos();
+        saveToLocalStorage();
+      }
+    }
+
+    function saveToLocalStorage() {
+      localStorage.setItem("todos", JSON.stringify(todos));
+    }
+    renderTodos();
+  </script>
+</html>
